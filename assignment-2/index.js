@@ -28,14 +28,18 @@ class CountriesAPI {
 
     async getCountryBorders(name) {
         const data = await this.#fetchByName(name);
-        const borderingWith = data[0].borders
-        return borderingWith
+        const borderingWith = data[0].borders;
+        return borderingWith;
+    }
+
+    async getCountriesByLanguage(language) {
+        const response = await fetch(`https://restcountries.com/v2/lang/${language}`);
+        const data = await response.json();
+        const countries = data.map(country => country.name);
+        return countries;
     }
 }
 
-const api = new CountriesAPI()
+const api = new CountriesAPI();
 
-const countries = api.getAllCountries();
-const country = api.getCountry('suomi');
-const countryBorders = api.getCountryBorders('suomi');
-
+const speakers = api.getCountriesByLanguage("EN")
