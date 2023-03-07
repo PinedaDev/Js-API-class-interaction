@@ -13,6 +13,7 @@ class CountriesAPI {
         return data;
     }
 
+
     async getAllCountries() {
         const data = await this.#fetchAllCountries();
         const allCountries = data.map(country => country.name.common);
@@ -24,10 +25,17 @@ class CountriesAPI {
         const countryData = data
         return countryData
     }
+
+    async getCountryBorders(name) {
+        const data = await this.#fetchByName(name);
+        const borderingWith = data[0].borders
+        return borderingWith
+    }
 }
 
 const api = new CountriesAPI()
 
 const countries = api.getAllCountries();
 const country = api.getCountry('suomi');
+const countryBorders = api.getCountryBorders('suomi');
 
