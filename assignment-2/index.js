@@ -28,8 +28,12 @@ class CountriesAPI {
 
     async getCountryBorders(name) {
         const data = await this.#fetchByName(name);
-        const borderingWith = data[0].borders;
-        return borderingWith;
+        if (data[0].borders) {
+            const borderingWith = data[0].borders;
+            return borderingWith
+        } else {
+            return 'no borders with other countries'
+        }
     }
 
     async getCountriesByLanguage(language) {
@@ -43,7 +47,19 @@ class CountriesAPI {
         const data = await this.#fetchAllCountries()
         const countriesData = data.filter(country => country.population > population * 10e6 ? true : "");
         const countries = countriesData.map(country => country.name.common)
-        console.log(countries)
         return countries;
     }
 }
+
+const api = new CountriesAPI();
+
+(async () => {
+    const countries = await api.getAllCountries();
+    const finland = await api.getCountry('suomi');
+    const borders = await api.getCountryBorders('suomi');
+    const speakersOf = await api.getCountriesByLanguage('es');
+    const morePopulationTHat = await api.getCountriesByPopulation(30)
+
+    // console.log({variables})
+    console.log(borders)
+})()
