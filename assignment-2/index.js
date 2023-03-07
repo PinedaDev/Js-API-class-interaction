@@ -38,8 +38,12 @@ class CountriesAPI {
         const countries = data.map(country => country.name);
         return countries;
     }
+
+    async getCountriesByPopulation(population) {
+        const data = await this.#fetchAllCountries()
+        const countriesData = data.filter(country => country.population > population * 10e6 ? true : "");
+        const countries = countriesData.map(country => country.name.common)
+        console.log(countries)
+        return countries;
+    }
 }
-
-const api = new CountriesAPI();
-
-const speakers = api.getCountriesByLanguage("EN")
