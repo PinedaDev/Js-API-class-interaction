@@ -12,4 +12,22 @@ class CountriesAPI {
         const data = await response.json();
         return data;
     }
+
+    async getAllCountries() {
+        const data = await this.#fetchAllCountries();
+        const allCountries = data.map(country => country.name.common);
+        return allCountries
+    }
+
+    async getCountry(name) {
+        const data = await this.#fetchByName(name);
+        const countryData = data
+        return countryData
+    }
 }
+
+const api = new CountriesAPI()
+
+const countries = api.getAllCountries();
+const country = api.getCountry('suomi');
+
